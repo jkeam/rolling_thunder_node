@@ -36,6 +36,7 @@ function processQueryParams(queryObj) {
 }
 
 function pipeHttpCall(options, response) {
+console.log('url: ' + options.path);
   var responseString = "";
   var req = http.request(options, function(res) {
     res.on('data', function(chunk) {
@@ -54,6 +55,23 @@ function pipeHttpCall(options, response) {
   req.end();
 }
 
+function returnError(message, format, res) {
+  res.statuscode=200; 
+  switch(format) {
+    case 'json':
+      res.json({message:message});
+    break;
+    default:
+      res.render('error', {message:message});
+  }
+}
+
+function validId(id) {
+  return id != null && id !== undefined && id != '' && !isNaN(id);
+}
+
 exports.getApiUrlOptions = getApiUrlOptions;
 exports.processQueryParams = processQueryParams;
 exports.pipeHttpCall = pipeHttpCall;
+exports.returnError = returnError;
+exports.validId = validId;
