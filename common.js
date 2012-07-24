@@ -36,7 +36,6 @@ function processQueryParams(queryObj) {
 }
 
 function pipeHttpCall(options, response) {
-console.log('url: ' + options.path);
   var responseString = "";
   var req = http.request(options, function(res) {
     res.on('data', function(chunk) {
@@ -67,8 +66,12 @@ function returnError(message, req, res) {
   }
 }
 
-function validateId(id) {
+function validateNumericId(id) {
   return id != null && id !== undefined && id != '' && !isNaN(id);
+}
+
+function validateStringId(id) {
+  return id != null && id !== undefined && id != '';
 }
 
 function prepareResponseToMatchFormat(req, res) {
@@ -108,5 +111,6 @@ function passThrough(req, res, controller, action, options) {
 //exports.pipeHttpCall = pipeHttpCall;
 //exports.prepareResponseToMatchFormat = prepareResponseToMatchFormat;
 exports.returnError = returnError;
-exports.validateId = validateId;
+exports.validateNumericId = validateNumericId;
+exports.validateStringId = validateStringId;
 exports.passThrough = passThrough;

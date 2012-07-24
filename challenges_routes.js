@@ -34,7 +34,7 @@ function getResults(req, res) {
 }
 
 function validate(id, req, res) {
-  var success = Common.validateId(id);
+  var success = Common.validateNumericId(id);
   if (!success) {
     Common.returnError('Invalid id', req, res);
   }

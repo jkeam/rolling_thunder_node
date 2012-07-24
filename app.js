@@ -4,6 +4,8 @@ var app = require('./server.js').createServer();
 var routes = require('./routes.js');
 var challenges = require('./challenges_routes.js');
 var leaderboard = require('./leaderboard_routes.js');
+var content = require('./content_routes.js');
+var members = require('./members_routes.js');
 app.get('/', routes.getIndex);
 
 //challenges
@@ -18,6 +20,19 @@ app.get('/leaderboard.:format?', leaderboard.getLeaderboard);
 app.get('/leaderboard_this_month.:format?', leaderboard.getLeaderboardThisMonth);
 app.get('/leaderboard_this_year.:format?', leaderboard.getLeaderboardThisYear);
 app.get('/leaderboard_all_time.:format?', leaderboard.getLeaderboardAllTime);
+
+//content
+app.get('/notifications.:format?', content.getNotifications);
+app.get('/home.:format?', content.getHome);
+
+//members
+app.get('/members.:format?', members.getIndex);
+app.get('/members/order_by_active.:format?', members.getOrderByActive);
+app.get('/members/order_by_name.:format?', members.getOrderByName);
+app.get('/members/order_by_win.:format?', members.getOrderByWin);
+app.get('/members/:id/past_challenges.:format?', members.getPastChallenges);
+app.get('/members/:id/active_challenges.:format?', members.getActiveChallenges);
+app.get('/members/search.:format?', members.getSearch);
 
 //app.use(routes.error);
 
