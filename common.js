@@ -44,6 +44,7 @@ console.log('url: ' + options.path);
     });
 
     res.on('end', function() {
+      response.statuscode = 200;
       response.send(responseString);
     });
   });
@@ -70,8 +71,22 @@ function validId(id) {
   return id != null && id !== undefined && id != '' && !isNaN(id);
 }
 
+function prepareResponseToMatchFormat(req, res) {
+  switch(req.params.format) {
+    case 'json':
+      extension = '.json';
+      res.contentType('application/json');
+    break;
+    default:
+      extension = '';
+      res.contentType('text/html');
+  }
+  return extension;
+}
+
 exports.getApiUrlOptions = getApiUrlOptions;
 exports.processQueryParams = processQueryParams;
 exports.pipeHttpCall = pipeHttpCall;
 exports.returnError = returnError;
 exports.validId = validId;
+exports.prepareResponseToMatchFormat = prepareResponseToMatchFormat;

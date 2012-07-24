@@ -1,53 +1,30 @@
 var Common = require("./common.js");
 
 function getRecentChallenges(req, res) {
-  res.statusCode = 200;
   var apiUrlOptions = Common.getApiUrlOptions();
   var queryparams = Common.processQueryParams(req.query);
 
-  var extension = '';
-  switch(req.params.format) {
-    case 'json':
-      extension = '.json';
-      res.contentType('application/json');
-    break;
-    default:
-      extension = '';
-      res.contentType('text/html');
-  }
-
+  var extension = Common.prepareResponseToMatchFormat(req, res);
   apiUrlOptions.path = "/challenges/recent" + extension + queryparams; 
   Common.pipeHttpCall(apiUrlOptions, res);
 }
 
 function getChallenges(req, res) {
   var id = req.params.id;
-  if (!Common.validId(id)) {
-    Common.returnError('Invalid id', req.params.format, res);
-    return;
-  }
-
-  res.statusCode = 200;
-  var apiUrlOptions = Common.getApiUrlOptions();
   var apiUrl = "/challenges";
-  var queryparams = Common.processQueryParams(req.query);
 
-  if (req.params.id) {
+  if (id) {
+    if (!Common.validId(id)) {
+      Common.returnError('Invalid id', req.params.format, res);
+      return;
+    }
     apiUrl = apiUrl + "/" + id;
   }
 
-  var extension = '';
-  switch(req.params.format) {
-    case 'json':
-      extension = '.json';
-      res.contentType('application/json');
+  var apiUrlOptions = Common.getApiUrlOptions();
+  var queryparams = Common.processQueryParams(req.query);
 
-    break;
-    default:
-      extension = '';
-      res.contentType('text/html');
-  }
-
+  var extension = Common.prepareResponseToMatchFormat(req, res);
   apiUrlOptions.path = apiUrl + extension + queryparams;
   Common.pipeHttpCall(apiUrlOptions, res);
 }
@@ -59,22 +36,10 @@ function getRegistrants(req, res) {
     return;
   }
 
-  res.statusCode = 200;
-  var id = req.params.id;
   var apiUrlOptions = Common.getApiUrlOptions();
   var queryparams = Common.processQueryParams(req.query);
 
-  var extension = '';
-  switch(req.params.format) {
-    case 'json':
-      extension = '.json';
-      res.contentType('application/json');
-    break;
-    default:
-      extension = '';
-      res.contentType('text/html');
-  }
-
+  var extension = Common.prepareResponseToMatchFormat(req, res);
   apiUrlOptions.path = "/challenges/" + id + "/registrants" + extension + queryparams; 
   Common.pipeHttpCall(apiUrlOptions, res);
 }
@@ -86,25 +51,10 @@ function getResults(req, res) {
     return;
   }
 
-  res.statusCode = 200;
   var apiUrlOptions = Common.getApiUrlOptions();
   var queryparams = Common.processQueryParams(req.query);
 
-  var extension = '';
-  switch(req.params.format) {
-    case 'json':
-      extension = '.json';
-      res.contentType('application/json');
-    break;
-    default:
-      extension = '';
-      res.contentType('text/html');
-  }
-
-  if (!req.params.id) {
-    Common.returnError('Missing id', req.params.format, res);
-  }
-
+  var extension = Common.prepareResponseToMatchFormat(req, res);
   apiUrlOptions.path = "/challenges/" + id + "/results" + extension + queryparams; 
   Common.pipeHttpCall(apiUrlOptions, res);
 }
