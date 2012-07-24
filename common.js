@@ -84,9 +84,28 @@ function prepareResponseToMatchFormat(req, res) {
   return extension;
 }
 
-exports.getApiUrlOptions = getApiUrlOptions;
-exports.processQueryParams = processQueryParams;
-exports.pipeHttpCall = pipeHttpCall;
+function passThrough(req, res, controller, action, options) {
+  var id = options.id;
+
+  var apiUrlOptions = getApiUrlOptions();
+  var queryparams = processQueryParams(req.query);
+
+  var extension = prepareResponseToMatchFormat(req, res);
+  apiUrlOptions.path = "/" + controller;
+  if (id) {
+    apiUrlOptions.path = apiUrlOptions.path + "/" + id;
+  }
+  if (action) {
+    apiUrlOptions.path = apiUrlOptions.path + "/" + action;
+  }
+  apiUrlOptions.path = apiUrlOptions.path + extension + queryparams;
+  pipeHttpCall(apiUrlOptions, res);
+}
+
+//exports.getApiUrlOptions = getApiUrlOptions;
+//exports.processQueryParams = processQueryParams;
+//exports.pipeHttpCall = pipeHttpCall;
+//exports.prepareResponseToMatchFormat = prepareResponseToMatchFormat;
 exports.returnError = returnError;
 exports.validId = validId;
-exports.prepareResponseToMatchFormat = prepareResponseToMatchFormat;
+exports.passThrough = passThrough;

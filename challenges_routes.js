@@ -1,32 +1,19 @@
 var Common = require("./common.js");
 
 function getRecentChallenges(req, res) {
-  var apiUrlOptions = Common.getApiUrlOptions();
-  var queryparams = Common.processQueryParams(req.query);
-
-  var extension = Common.prepareResponseToMatchFormat(req, res);
-  apiUrlOptions.path = "/challenges/recent" + extension + queryparams; 
-  Common.pipeHttpCall(apiUrlOptions, res);
+  Common.passThrough(req, res, 'challenges', 'recent', {});
 }
 
 function getChallenges(req, res) {
   var id = req.params.id;
-  var apiUrl = "/challenges";
-
   if (id) {
     if (!Common.validId(id)) {
       Common.returnError('Invalid id', req.params.format, res);
       return;
     }
-    apiUrl = apiUrl + "/" + id;
   }
 
-  var apiUrlOptions = Common.getApiUrlOptions();
-  var queryparams = Common.processQueryParams(req.query);
-
-  var extension = Common.prepareResponseToMatchFormat(req, res);
-  apiUrlOptions.path = apiUrl + extension + queryparams;
-  Common.pipeHttpCall(apiUrlOptions, res);
+  Common.passThrough(req, res, 'challenges', null, {id:id});
 }
 
 function getRegistrants(req, res) {
@@ -36,12 +23,7 @@ function getRegistrants(req, res) {
     return;
   }
 
-  var apiUrlOptions = Common.getApiUrlOptions();
-  var queryparams = Common.processQueryParams(req.query);
-
-  var extension = Common.prepareResponseToMatchFormat(req, res);
-  apiUrlOptions.path = "/challenges/" + id + "/registrants" + extension + queryparams; 
-  Common.pipeHttpCall(apiUrlOptions, res);
+  Common.passThrough(req, res, 'challenges', 'registrants', {id:id});
 }
 
 function getResults(req, res) {
@@ -51,12 +33,7 @@ function getResults(req, res) {
     return;
   }
 
-  var apiUrlOptions = Common.getApiUrlOptions();
-  var queryparams = Common.processQueryParams(req.query);
-
-  var extension = Common.prepareResponseToMatchFormat(req, res);
-  apiUrlOptions.path = "/challenges/" + id + "/results" + extension + queryparams; 
-  Common.pipeHttpCall(apiUrlOptions, res);
+  Common.passThrough(req, res, 'challenges', 'results', {id:id});
 }
 
 exports.getChallenges = getChallenges;
