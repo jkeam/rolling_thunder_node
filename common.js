@@ -56,9 +56,9 @@ console.log('url: ' + options.path);
   req.end();
 }
 
-function returnError(message, format, res) {
+function returnError(message, req, res) {
   res.statuscode=200; 
-  switch(format) {
+  switch(req.params.format) {
     case 'json':
       res.json({message:message});
     break;
@@ -67,7 +67,7 @@ function returnError(message, format, res) {
   }
 }
 
-function validId(id) {
+function validateId(id) {
   return id != null && id !== undefined && id != '' && !isNaN(id);
 }
 
@@ -102,10 +102,11 @@ function passThrough(req, res, controller, action, options) {
   pipeHttpCall(apiUrlOptions, res);
 }
 
+//uncomment these functions when doing more than passthrough
 //exports.getApiUrlOptions = getApiUrlOptions;
 //exports.processQueryParams = processQueryParams;
 //exports.pipeHttpCall = pipeHttpCall;
 //exports.prepareResponseToMatchFormat = prepareResponseToMatchFormat;
 exports.returnError = returnError;
-exports.validId = validId;
+exports.validateId = validateId;
 exports.passThrough = passThrough;

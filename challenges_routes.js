@@ -7,8 +7,7 @@ function getRecentChallenges(req, res) {
 function getChallenges(req, res) {
   var id = req.params.id;
   if (id) {
-    if (!Common.validId(id)) {
-      Common.returnError('Invalid id', req.params.format, res);
+    if (!validate(id, req, res)) {
       return;
     }
   }
@@ -18,8 +17,7 @@ function getChallenges(req, res) {
 
 function getRegistrants(req, res) {
   var id = req.params.id;
-  if (!Common.validId(id)) {
-    Common.returnError('Invalid id', req.params.format, res);
+  if (!validate(id, req, res)) {
     return;
   }
 
@@ -28,12 +26,19 @@ function getRegistrants(req, res) {
 
 function getResults(req, res) {
   var id = req.params.id;
-  if (!Common.validId(id)) {
-    Common.returnError('Invalid id', req.params.format, res);
+  if (!validate(id, req, res)) {
     return;
   }
 
   Common.passThrough(req, res, 'challenges', 'results', {id:id});
+}
+
+function validate(id, req, res) {
+  var success = Common.validateId(id);
+  if (!success) {
+    Common.returnError('Invalid id', req, res);
+  }
+  return success;
 }
 
 exports.getChallenges = getChallenges;
