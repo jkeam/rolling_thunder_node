@@ -1,5 +1,6 @@
 var async = require('async');
 var http = require('http');
+var ERROR_MESSAGE = 'A problem has occurred during the request.'
 
 function getApiUrlOptions(url) {
   return {
@@ -35,7 +36,7 @@ function processQueryParams(queryObj) {
   return query;
 }
 
-function pipeHttpCall(options, response) {
+function pipeHttpCall(options, request, response) {
   var responseString = '';
   var req = http.request(options, function(res) {
     res.on('data', function(chunk) {
@@ -43,13 +44,35 @@ function pipeHttpCall(options, response) {
     });
 
     res.on('end', function() {
-      response.statuscode = 200;
-      response.send(responseString);
+      var error = false;
+      var format = request.params.format;
+      var statuscode = parseInt(res.statusCode);
+      if (statuscode > 300 && statuscode < 309) {
+        var relocation = res.headers.location;
+        response.setHeader('location', relocation);
+        switch(format) {
+          case('json'):
+            responseString = 'A redirect to ' + relocation + ' has been issued.';
+          break;
+          default:
+            responseString = 'A redirect to <a href="' + relocation + '">' + relocation + '</a> has been issued.';
+        }
+      } else if (statuscode > 309) {
+        error = true;
+      }
+
+      response.statusCode = res.statusCode;
+      if (error) {
+        returnError(ERROR_MESSAGE, request, response);
+      } else {
+        response.send(responseString);
+      }
     });
   });
 
   req.on('error', function(err) {
     console.error(err.message);
+    returnError(err.message, request, response);
   });
 
   req.end();
@@ -102,7 +125,7 @@ function passThrough(req, res, controller, action, options) {
     apiUrlOptions.path = apiUrlOptions.path + '/' + action;
   }
   apiUrlOptions.path = apiUrlOptions.path + extension + queryparams;
-  pipeHttpCall(apiUrlOptions, res);
+  pipeHttpCall(apiUrlOptions, req, res);
 }
 
 //uncomment these functions when doing more than passthrough
