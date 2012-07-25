@@ -1,0 +1,13 @@
+This app is the node app for challenge 1635 from CloudSpokes.
+
+Prerequisites
+------------------
+Make sure you have node and npm installed.
+
+Setup
+------------------
+Run 'npm install' the first time.
+
+Running
+------------------
+Run './run.sh'.
