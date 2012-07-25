@@ -8,8 +8,9 @@ function createServer() {
 
   //middleware
   app.use(express.logger());
-  app.use(express.static(__dirname + '/../public'));
   app.use(express.bodyParser());
+  app.use(express.cookieParser());
+  app.use(express.static(__dirname + '/../public'));
   app.configure('development', function() {
     app.use(express.errorHandler({ showStack: true, dumpExceptions: true }));
   });

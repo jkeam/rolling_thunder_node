@@ -1,4 +1,4 @@
-var app = require('./configs/server.js').createServer();
+var app = require('./conf/server.js').createServer();
 
 //routes
 var routes = require('./controllers/application_controller.js');
@@ -34,17 +34,8 @@ app.get('/members/:id/past_challenges.:format?', members.getPastChallenges);
 app.get('/members/:id/active_challenges.:format?', members.getActiveChallenges);
 app.get('/members/search.:format?', members.getSearch);
 
-//app.use(routes.error);
-
 //start server
 var port = 3000;
 app.listen(port, function() {
   console.log('Server listening on %d in %s mode', port, app.settings.env);
 });
-
-//docs
-//http://fabianosoriani.wordpress.com/2011/08/15/express-api-on-node-js-with-mysql-auth/
-//http://www.franz-enzenhofer.com/jade
-//https://github.com/visionmedia/jade#readme
-//http://expressjs.com/guide.html
-//http://dailyjs.com/2010/11/15/node-tutorial-3/
