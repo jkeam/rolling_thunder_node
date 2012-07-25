@@ -35,7 +35,7 @@ app.get('/members/:id/active_challenges.:format?', members.getActiveChallenges);
 app.get('/members/search.:format?', members.getSearch);
 
 //start server
-var port = 3000;
+var port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log('Server listening on %d in %s mode', port, app.settings.env);
 });
