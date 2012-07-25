@@ -1,19 +1,20 @@
-var Common = require("./common.js");
+var HttpUtil = require('../utils/http_util.js');
+var Validator = require('../utils/validator.js');
 
 function getIndex(req, res) {
-  Common.passThrough(req, res, 'members', null, {});
+  HttpUtil.passThrough(req, res, 'members', null, {});
 }
 
 function getOrderByActive(req, res) {
-  Common.passThrough(req, res, 'members', 'order_by_active', {});
+  HttpUtil.passThrough(req, res, 'members', 'order_by_active', {});
 }
 
 function getOrderByName(req, res) {
-  Common.passThrough(req, res, 'members', 'order_by_name', {});
+  HttpUtil.passThrough(req, res, 'members', 'order_by_name', {});
 }
 
 function getOrderByWin(req, res) {
-  Common.passThrough(req, res, 'members', 'order_by_win', {});
+  HttpUtil.passThrough(req, res, 'members', 'order_by_win', {});
 }
 
 function getPastChallenges(req, res) {
@@ -21,7 +22,7 @@ function getPastChallenges(req, res) {
   if (!validate(id, req, res)) {
     return;
   }
-  Common.passThrough(req, res, 'members', 'past_challenges', {id:id});
+  HttpUtil.passThrough(req, res, 'members', 'past_challenges', {id:id});
 }
 
 function getActiveChallenges(req, res) {
@@ -29,17 +30,17 @@ function getActiveChallenges(req, res) {
   if (!validate(id, req, res)) {
     return;
   }
-  Common.passThrough(req, res, 'members', 'active_challenges', {id:id});
+  HttpUtil.passThrough(req, res, 'members', 'active_challenges', {id:id});
 }
 
 function getSearch(req, res) {
-  Common.passThrough(req, res, 'members', 'search', {});
+  HttpUtil.passThrough(req, res, 'members', 'search', {});
 }
 
 function validate(id, req, res) {
-  var success = Common.validateStringId(id);
+  var success = Validator.validateStringId(id);
   if (!success) {
-    Common.returnError('Invalid id', req, res);
+    HttpUtil.returnError('Invalid id', req, res);
   }
   return success;
 }

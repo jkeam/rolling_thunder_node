@@ -1,7 +1,8 @@
-var Common = require("./common.js");
+var HttpUtil = require('../utils/http_util.js');
+var Validator = require('../utils/validator.js');
 
 function getRecentChallenges(req, res) {
-  Common.passThrough(req, res, 'challenges', 'recent', {});
+  HttpUtil.passThrough(req, res, 'challenges', 'recent', {});
 }
 
 function getChallenges(req, res) {
@@ -12,7 +13,7 @@ function getChallenges(req, res) {
     }
   }
 
-  Common.passThrough(req, res, 'challenges', null, {id:id});
+  HttpUtil.passThrough(req, res, 'challenges', null, {id:id});
 }
 
 function getRegistrants(req, res) {
@@ -21,7 +22,7 @@ function getRegistrants(req, res) {
     return;
   }
 
-  Common.passThrough(req, res, 'challenges', 'registrants', {id:id});
+  HttpUtil.passThrough(req, res, 'challenges', 'registrants', {id:id});
 }
 
 function getResults(req, res) {
@@ -30,13 +31,13 @@ function getResults(req, res) {
     return;
   }
 
-  Common.passThrough(req, res, 'challenges', 'results', {id:id});
+  HttpUtil.passThrough(req, res, 'challenges', 'results', {id:id});
 }
 
 function validate(id, req, res) {
-  var success = Common.validateNumericId(id);
+  var success = Validator.validateNumericId(id);
   if (!success) {
-    Common.returnError('Invalid id', req, res);
+    HttpUtil.returnError('Invalid id', req, res);
   }
   return success;
 }

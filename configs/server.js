@@ -3,12 +3,12 @@ function createServer() {
   var app = express.createServer();
 
   //config
-  app.set("view engine", "jade");
-  app.set("views", __dirname + "/views");
+  app.set('view engine', 'jade');
+  app.set('views', __dirname + '/../views');
 
   //middleware
   app.use(express.logger());
-  app.use(express.static(__dirname + "/../public"));
+  app.use(express.static(__dirname + '/../public'));
   app.use(express.bodyParser());
   app.configure('development', function() {
     app.use(express.errorHandler({ showStack: true, dumpExceptions: true }));

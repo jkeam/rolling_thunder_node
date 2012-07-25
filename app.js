@@ -1,11 +1,11 @@
-var app = require('./server.js').createServer();
+var app = require('./configs/server.js').createServer();
 
 //routes
-var routes = require('./routes.js');
-var challenges = require('./challenges_routes.js');
-var leaderboard = require('./leaderboard_routes.js');
-var content = require('./content_routes.js');
-var members = require('./members_routes.js');
+var routes = require('./controllers/application_controller.js');
+var challenges = require('./controllers/challenges_controller.js');
+var leaderboard = require('./controllers/leaderboard_controller.js');
+var content = require('./controllers/content_controller.js');
+var members = require('./controllers/members_controller.js');
 app.get('/', routes.getIndex);
 
 //challenges
@@ -39,7 +39,7 @@ app.get('/members/search.:format?', members.getSearch);
 //start server
 var port = 3000;
 app.listen(port, function() {
-  console.log("Server listening on %d in %s mode", port, app.settings.env);
+  console.log('Server listening on %d in %s mode', port, app.settings.env);
 });
 
 //docs

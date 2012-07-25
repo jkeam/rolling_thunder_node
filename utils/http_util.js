@@ -16,27 +16,27 @@ function processQueryParams(queryObj) {
   //right now its just a pass through so re-assemble the query params
   async.forEach(Object.keys(queryObj), function(item, callback) {
     if (query != null) {
-      query = query + "&";
+      query = query + '&';
     }
     else {
-      query = "?";
+      query = '?';
     }
 
-    query = query + item + "=" + queryObj[item];
+    query = query + item + '=' + queryObj[item];
     callback();
   }, function(err) {
     if (err != null) {
-      console.error("Error encountered while examining query parameters: " + query);
+      console.error('Error encountered while examining query parameters: ' + query);
     }
   });
 
   if (query == null)
-    query = "";
+    query = '';
   return query;
 }
 
 function pipeHttpCall(options, response) {
-  var responseString = "";
+  var responseString = '';
   var req = http.request(options, function(res) {
     res.on('data', function(chunk) {
       responseString = responseString + chunk.toString();
@@ -94,12 +94,12 @@ function passThrough(req, res, controller, action, options) {
   var queryparams = processQueryParams(req.query);
 
   var extension = prepareResponseToMatchFormat(req, res);
-  apiUrlOptions.path = "/" + controller;
+  apiUrlOptions.path = '/' + controller;
   if (id) {
-    apiUrlOptions.path = apiUrlOptions.path + "/" + id;
+    apiUrlOptions.path = apiUrlOptions.path + '/' + id;
   }
   if (action) {
-    apiUrlOptions.path = apiUrlOptions.path + "/" + action;
+    apiUrlOptions.path = apiUrlOptions.path + '/' + action;
   }
   apiUrlOptions.path = apiUrlOptions.path + extension + queryparams;
   pipeHttpCall(apiUrlOptions, res);
@@ -111,6 +111,4 @@ function passThrough(req, res, controller, action, options) {
 //exports.pipeHttpCall = pipeHttpCall;
 //exports.prepareResponseToMatchFormat = prepareResponseToMatchFormat;
 exports.returnError = returnError;
-exports.validateNumericId = validateNumericId;
-exports.validateStringId = validateStringId;
 exports.passThrough = passThrough;
