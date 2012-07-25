@@ -1,8 +1,9 @@
+var HttpUtil = require('../utils/http_util.js');
+
 function getIndex(req, res) {
-    res.send('hello world');
+    HttpUtil.passThrough(req, res, null, null, {});
 }
 
-//error handling
 function error(req, res) {
   switch (req.params.format) {
     case 'json':

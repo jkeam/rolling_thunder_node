@@ -111,13 +111,19 @@ function prepareResponseToMatchFormat(req, res) {
 }
 
 function passThrough(req, res, controller, action, options) {
-  var id = options.id;
+  var id = null;
+  if (options != null && options.id) {
+    id = options.id;
+  }
 
   var apiUrlOptions = getApiUrlOptions();
   var queryparams = processQueryParams(req.query);
 
   var extension = prepareResponseToMatchFormat(req, res);
-  apiUrlOptions.path = '/' + controller;
+  apiUrlOptions.path = '/';
+  if (controller) {
+    apiUrlOptions.path = apiUrlOptions.path + controller;
+  }
   if (id) {
     apiUrlOptions.path = apiUrlOptions.path + '/' + id;
   }
