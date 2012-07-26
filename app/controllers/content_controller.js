@@ -1,6 +1,6 @@
 var HttpUtil = require('../utils/http_util.js');
 
-function getNotification(req, res) {
+function getNotifications(req, res) {
   HttpUtil.passThrough(req, res, 'notifications', null, {});
 }
 
@@ -8,5 +8,5 @@ function getHome(req, res) {
   HttpUtil.passThrough(req, res, 'home', null, {});
 }
 
-exports.getNotification = getNotification;
+exports.getNotifications = getNotifications;
 exports.getHome = getHome;

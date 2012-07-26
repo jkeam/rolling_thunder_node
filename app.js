@@ -1,11 +1,11 @@
 var app = require('./conf/server.js').createServer();
 
 //routes
-var routes = require('./controllers/application_controller.js');
-var challenges = require('./controllers/challenges_controller.js');
-var leaderboard = require('./controllers/leaderboard_controller.js');
-var content = require('./controllers/content_controller.js');
-var members = require('./controllers/members_controller.js');
+var routes = require('./app/controllers/application_controller.js');
+var challenges = require('./app/controllers/challenges_controller.js');
+var leaderboard = require('./app/controllers/leaderboard_controller.js');
+var content = require('./app/controllers/content_controller.js');
+var members = require('./app/controllers/members_controller.js');
 app.get('/', routes.getIndex);
 
 //challenges

@@ -4,7 +4,7 @@ function createServer() {
 
   //config
   app.set('view engine', 'jade');
-  app.set('views', __dirname + '/../views');
+  app.set('views', __dirname + '/../app/views');
 
   //middleware
   app.use(express.logger());
