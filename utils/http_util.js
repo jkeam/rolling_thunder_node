@@ -134,7 +134,6 @@ function passThrough(req, res, controller, action, options) {
   pipeHttpCall(apiUrlOptions, req, res);
 }
 
-//uncomment these functions when doing more than passthrough
 //exports.getApiUrlOptions = getApiUrlOptions;
 //exports.processQueryParams = processQueryParams;
 //exports.pipeHttpCall = pipeHttpCall;

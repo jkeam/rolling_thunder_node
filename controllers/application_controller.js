@@ -1,7 +1,8 @@
 var HttpUtil = require('../utils/http_util.js');
 
 function getIndex(req, res) {
-    HttpUtil.passThrough(req, res, null, null, {});
+  res.contentType('text/html');
+  res.render('index');
 }
 
 function error(req, res) {
